@@ -1,0 +1,23 @@
+Ext.define('SC.store.ProductTypeStore',{
+  extend:'Ext.data.TreeStore',
+  alias:'producttypestore',
+  model:'SC.model.ProductType',
+  proxy:{
+    type:'ajax',
+    url:'http://localhost:3000/producttypes?userId=121',
+    reader:{
+      root:'productTypes',
+      type:'json'
+    }
+  },
+  root:{
+    text:'商品类型',
+    expanded: true
+  },
+  fields:[
+    {name:'text'},
+    {name:'leaf'},
+    {name:'id'},
+    {name:'children'}
+  ]
+});

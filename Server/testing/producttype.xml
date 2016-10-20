@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<productTypes>
+  <type>
+    <name>A</name>
+    <id>1</id>
+    <children>
+        <type>
+          <name>A1</name>
+          <id>2</id>
+        </type>
+        <type>
+          <name>A2</name>
+          <id>3</id>
+        </type>
+    </children>
+  </type>
+  <type>
+    <name>B</name>
+    <id>4</id>
+    <children>
+        <type>
+          <name>B1</name>
+          <id>5</id>
+        </type>
+        <type>
+          <name>A2</name>
+          <id>6</id>
+        </type>
+    </children>
+  </type>
+</productTypes>

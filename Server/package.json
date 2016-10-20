@@ -1,0 +1,18 @@
+{
+  "name":"SalesServer",
+  "version":"0.0.1",
+  "author":"juxiangwu",
+  "dependencies":{
+    "mysql":"*",
+    "mysql2":"*",
+    "async":"*",
+    "hapi":"*",
+    "good":"*",
+    "good-console":"*",
+    "good-squeeze" :"*",
+    "randomstring":"*",
+    "sequelize":"*",
+    "xml2js":"*",
+    "xml2js-xpath":"*"
+  }
+}
