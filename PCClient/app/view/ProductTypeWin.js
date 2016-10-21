@@ -8,7 +8,8 @@ Ext.define('SC.view.ProductTypeWin',{
     'Ext.layout.container.Border',
     'SC.store.ProductTypeStore',
     'SC.component.ProductTypeHandler',
-    'SC.component.LocalStorage'
+    'SC.component.LocalStorage',
+    'SC.component.AppWindowManager'
   ],
   id:'win-product-type',
   title:'添加商品分类',
@@ -24,7 +25,7 @@ Ext.define('SC.view.ProductTypeWin',{
   initComponent:function(){
     var me = this;
     me.uid = SC.component.LocalStorage.get('uid');
-    console.log('uid = ' + me.uid);
+    //console.log('uid = ' + me.uid);
     this.handler = new SC.component.ProductTypeHandler();
     me.store = me.createTreeStore();
     me.tree = me.createTree();
@@ -161,7 +162,7 @@ Ext.define('SC.view.ProductTypeWin',{
         type:'ajax',
         url:_url,
         reader:{
-          root:'productTypes',
+          rootProperty:'productTypes',
           type:'json'
         }
       },
@@ -205,6 +206,11 @@ Ext.define('SC.view.ProductTypeWin',{
   onSelect:function(tree,record){
     console.log(record.data);
     this.selectedItem = record.data;
+  },
+  listeners:{
+    destroy:function(winobj , eOpts ){
+      SC.component.AppWindowManager.removeWindow(this.id);
+    }
   }
 
 })

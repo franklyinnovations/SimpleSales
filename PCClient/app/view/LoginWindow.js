@@ -4,7 +4,8 @@ Ext.define('SC.view.LoginWindow',{
 	require:[
 		  'Ext.window.MessageBox',
 			'Ext.MessageBox',
-			'SC.component.LocalStorage'
+			'SC.component.LocalStorage',
+			'SC.component.LoginHandler'
 	],
 	id : 'login-win',
 	layout : 'fit', //自适应布局
@@ -20,6 +21,7 @@ Ext.define('SC.view.LoginWindow',{
 	closable : false,//禁止关闭,
 	title:'登录系统',
 	modal:true,
+
 	items:[
 		{
 			xtype:'form',
@@ -148,27 +150,37 @@ Ext.define('SC.view.LoginWindow',{
 		var uname = Ext.getCmp('login-uname').getValue();
 		var pwd = Ext.getCmp('login-pwd').getValue();
 		var me  = this;
-		Ext.Ajax.request({
-			 url:'http://localhost:3000/login',
-			 params: {name:uname,password:pwd },
-			 method: 'POST',
-      success: function (response, options) {
-				var result = Ext.decode(response.responseText);
-			//	console.log(result.datas.rows[0]);
-				if(result.result == 'success'){
-					SC.component.LocalStorage.set('uname',uname);
-					SC.component.LocalStorage.set('uid',result.datas.rows[0].id);
-					var ipcRenderer = require('electron').ipcRenderer;
-					ipcRenderer.send('asynchronous-message', 'user-login');
-					me.destroy();
-				}else{
-					Ext.MessageBox.alert('失败','用户名或密码不正确');
-				}
-      },
-      failure: function (response, options) {
-        Ext.MessageBox.alert('失败', '请求超时或网络故障,错误编号：' + response.status);
-      },
+		var args = {name:uname,password:pwd };
+		var handler = new SC.component.LoginHandler();
+		handler.login(args,function(result){
+			if(result.success){
+				me.destroy();
+			}else{
+				Ext.MessageBox.alert('登录系统',result.message);
+			}
 		});
+		// Ext.Ajax.request({
+		// 	 url:'http://localhost:3000/login',
+		// 	 params: {name:uname,password:pwd },
+		// 	 method: 'POST',
+    //   success: function (response, options) {
+		// 		var result = Ext.decode(response.responseText);
+		// 	//	console.log(result.datas.rows[0]);
+		// 		if(result.result == 'success'){
+		// 			SC.component.LocalStorage.set('usrname',result.datas.rows[0].name);
+		// 			SC.component.LocalStorage.set('usrcode',result.datas.rows[0].code);
+		// 			SC.component.LocalStorage.set('uid',result.datas.rows[0].id);
+		// 			var ipcRenderer = require('electron').ipcRenderer;
+		// 			ipcRenderer.send('asynchronous-message', 'user-login');
+		// 			me.destroy();
+		// 		}else{
+		// 			Ext.MessageBox.alert('失败','用户名或密码不正确');
+		// 		}
+    //   },
+    //   failure: function (response, options) {
+    //     Ext.MessageBox.alert('失败', '请求超时或网络故障,错误编号：' + response.status);
+    //   },
+		// });
 	},
 	handleReset:function(){
 		Ext.getCmp('login-uname').setValue('');

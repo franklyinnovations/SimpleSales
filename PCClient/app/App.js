@@ -17,39 +17,32 @@ Ext.define('SC.App', {
       'Ext.data.JsonStore',
       'SC.view.LoginWindow',
       'SC.view.ProductInfoWin',
-      'SC.component.MainProcessMessageHandler'
+      'SC.component.MainProcessMessageHandler',
+      'SC.component.AppEventHandler',
+      'SC.widgets.ProductMenuModule'
+      //'SC.widgets.SupplierModule'
     ],
-    // ipcRenderer:null,
-    // onMainProcessMessage:function(event,args){
-    //   //var me = this;
-    //   console.log(args);
-    //   console.log('desktop == null?' + (this.desktop == null));
-    //   //console.log('desktop.app == null?' + (me.desktop.app == null));
-    //   if(args == 'show-product-info-win'){
-    //     var module = this.getModule('win-product-info');
-    //     var win = module && module.createWindow();
-    //     if(win){
-    //       win.show();
-    //     }
-    //   }
-    // },
+
     messageHandler:null,
+    menuTitle:'',
     init: function() {
         // custom logic before getXYZ methods get called...
         var me = this;
-        // me.ipcRenderer = require('electron').ipcRenderer;
-        // me.ipcRenderer.on('toolbar-msg',me.onMainProcessMessage);
+
         me.messageHandler = new SC.component.MainProcessMessageHandler({app:me});
 
-        this.callParent();
+        me.callParent();
         var loginWin = new SC.view.LoginWindow();
         loginWin.show();
+
         // now ready...
     },
 
     getModules : function(){
         return [
-          new SC.view.ProductInfoWin()
+          new SC.view.ProductInfoWin(),
+          new SC.widgets.ProductMenuModule()
+          //new SC.widgets.SupplierModule()
         ];
     },
 
@@ -67,12 +60,7 @@ Ext.define('SC.App', {
                 model: 'Ext.ux.desktop.ShortcutModel',
                 data: [
                   {name:'商品档案',iconCls:'product-info-48x48',module:'win-product-info'}
-                    //{ name: 'Grid Window', iconCls: 'grid-shortcut', module: 'grid-win' },
-                  //  { name: 'Accordion Window', iconCls: 'accordion-shortcut', module: 'acc-win' },
-                  //  { name: 'Notepad', iconCls: 'notepad-shortcut', module: 'notepad' },
-                  //  { name: 'System Status', iconCls: 'cpu-shortcut', module: 'systemstatus'},
-                  //  { name: 'WebGL', iconCls: 'grid-shortcut', module: 'webgl-win' },
-                  //{ name: 'WebPage', iconCls: 'grid-shortcut', module: 'webpage-win' }
+
                 ]
             }),
 
@@ -80,37 +68,42 @@ Ext.define('SC.App', {
             wallpaperStretch: true
         });
     },
-    // getModule:function(name){
-    //
-    //   return this.callParent(name);
-    // },
-    // config for the start menu
-    getStartConfig : function() {
-        var me = this, ret = me.callParent();
 
-        return Ext.apply(ret, {
-            title: 'Don Griffin',
+    getStartConfig : function() {
+      console.log('getStartConfig');
+        var me = this, ret = me.callParent();
+        me.startConfigObj = {
+            title: me.menuTitle,
             iconCls: 'user',
             height: 300,
             toolConfig: {
                 width: 100,
                 items: [
                     {
-                        text:'Settings',
+                        text:'设置',
                         iconCls:'settings',
                         handler: me.onSettings,
                         scope: me
                     },
                     '-',
                     {
-                        text:'Logout',
+                        text:'注册',
                         iconCls:'logout',
                         handler: me.onLogout,
                         scope: me
                     }
                 ]
+            },
+            listeners:{
+              show:function(menu,options){
+                //console.log('menu show')
+                var name = SC.component.LocalStorage.get('usrname');
+                me.menuTitle = name;
+                menu.setTitle(name);
+              }
             }
-        });
+        };
+        return Ext.apply(ret,me.startConfigObj);
     },
 
     getTaskbarConfig: function () {

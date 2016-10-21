@@ -4,7 +4,7 @@
  * Sencha Cmd when upgrading.
  */
 Ext.application({
-    name: 'SalesClient',
+    name: 'SalseClient',
 
     //-------------------------------------------------------------------------
     // Most customizations should be made to Desktop.Application. If you need to
@@ -13,11 +13,13 @@ Ext.application({
     //-------------------------------------------------------------------------
 
     requires: [
-        'SC.App'
+        'SC.App',
+        'SC.component.AppEventHandler'
         //'SC.component.MainProcessMessageHandler'
     ],
     init: function() {
-        var app = new SC.App();
+      SC.component.AppEventHandler.init();
+      var app = new SC.App();
       //  app.mainProcessMessageHandler = new SC.component.MainProcessMessageHandler({app:app});
     }
 });

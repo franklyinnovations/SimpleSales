@@ -5,15 +5,16 @@ Ext.define('SC.view.ProductInfoWin',{
     'Ext.data.*',
     'SC.store.ProductTypeStore',
     'SC.view.ProductTypeWin',
-    'SC.view.SupplierWin'
+    'SC.view.SupplierWin',
+    'SC.component.AppWindowManager'
   ],
   id:'win-product-info',
 
   init:function(){
-    this.launcher = {
-      title:'商品档案',
-      iconCls:'product-info-16x16'
-    }
+    // this.launcher = {
+    //   title:'商品档案',
+    //   iconCls:'product-info-16x16'
+    // }
   },
   createWindow:function(){
     var desktop = this.app.getDesktop();
@@ -34,19 +35,29 @@ Ext.define('SC.view.ProductInfoWin',{
             xtype:'button',
             text:'添加分类',
             handler:function(){
-              var typeWin = new SC.view.ProductTypeWin({
-                desktop:desktop
-              });
-              typeWin.show();
+              if(SC.component.AppWindowManager.hasWindow('win-product-type')){
+                console.log('Window Product Type has existed');
+                return;
+              }else{
+                var desktop = me.app.getDesktop();
+                SC.component.AppWindowManager.addWindow('win-product-type');
+                var win = new SC.view.ProductTypeWin({desktop:desktop});
+                win.show();
+              }
             }
           },{
             xtype:'button',
             text:'添加供应商',
             handler:function(){
-              var win = new SC.view.SupplierWin({
-                desktop:desktop
-              });
-              win.show();
+              if(SC.component.AppWindowManager.hasWindow('module-supplier')){
+                console.log('Widow SupplierWin has existed');
+                return;
+              }else{
+                var desktop = me.app.getDesktop();
+                var win = new SC.view.SupplierWin({desktop:desktop});
+                win.show();
+                //return win;
+              }
             }
           }
         ]

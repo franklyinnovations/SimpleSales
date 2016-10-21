@@ -14,6 +14,8 @@ Ext.define('SC.component.MainProcessMessageHandler',{
         me.showProductInfoWin();
       }else if(msg == 'show-product-type-win'){
         me.showProductTypeWin();
+      }else if(msg == 'show-supplier-win'){
+        me.showSupplierWin();
       }
     });
     me.ipcRenderer.on('event-app-exit',function(event,msg){
@@ -36,14 +38,19 @@ Ext.define('SC.component.MainProcessMessageHandler',{
     if(win){
       win.show();
     }
+    console.log('MainProcessMessageHandler::showProductInfoWin');
   },
 
   showProductTypeWin:function(){
-    var me = this;
-    var win = new SC.view.ProductTypeWin({
-      desktop:me.app.getDesktop()
-    });
-    win.show();
+
+    SC.component.AppWindowManager.showWindow('win-product-type',
+          'SC.view.ProductTypeWin',
+          {desktop:this.app.getDesktop()});
+  },
+  showSupplierWin:function(){
+    SC.component.AppWindowManager.showWindow('module-supplier',
+          'SC.view.SupplierWin',
+          {desktop:this.app.getDesktop()});
   }
 
 

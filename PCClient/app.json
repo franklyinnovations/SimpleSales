@@ -259,7 +259,7 @@
      *  }
      *
      */
-    "output": "./build/SalesClient",
+    "output": "./build/PCClient",
 
     /**
      * Uniquely generated id for this application, used as prefix for localStorage keys.

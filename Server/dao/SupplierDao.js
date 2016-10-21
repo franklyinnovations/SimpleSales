@@ -361,7 +361,14 @@ var SupplierDao = function(db){
     }
 
     function doQuery(done){
-      Supplier.findAll({offset:_offset,limit:_limit,where:selection})
+      Supplier.findAll({
+        offset:_offset,
+        limit:_limit,
+        where:selection,
+        order:[
+          ['id','DESC']
+        ]
+      })
       .then(function(results){
         var msg = {
           result:'success',
