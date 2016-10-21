@@ -12,6 +12,23 @@ let mainWindow
 
 function createMenu(){
   var menuTemplate = [{
+    label:'文件',
+    submenu:[
+      {
+        label:'重启',
+        click:function(){
+          app.relaunch();
+          app.quit();
+        }
+      },{type:'separator'},
+      {
+        label:'退出',
+        click:function(){
+          app.quit();
+        }
+      }
+    ]
+  },{
     label:'商品',
     submenu:[
       {
@@ -20,7 +37,7 @@ function createMenu(){
           // ipcMain.on('asynchronous-message', function (event, arg) {
           //   event.sender.send('asynchronous-reply', 'show-product-info-win');
           // })
-          mainWindow.webContents.send('toolbar-msg','show-product-info-win');
+          mainWindow.webContents.send('event-toolbar-toggled','show-product-info-win');
         }
       },
       {
@@ -34,6 +51,12 @@ function createMenu(){
           // })
           mainWindow.webContents.send('event-toolbar-toggled','show-product-type-win');
 
+        }
+      },{type:'separator'},
+      {
+        label:'商品供应商',
+        click:function(){
+          mainWindow.webContents.send('event-toolbar-toggled','show-supplier-win');
         }
       }
     ]
