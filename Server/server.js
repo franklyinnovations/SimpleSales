@@ -18,8 +18,6 @@ var commOpts = {
   routes:_routes
 }
 
-
-
 sequelize.sync({forece:true}).then(function(){
     server.register([{
       register: Good,
@@ -69,6 +67,9 @@ sequelize.sync({forece:true}).then(function(){
     options:commOpts
   },{
     register:require('./plugins/supplier/pagequery/supplierpagequery.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/supplier/querywithuid/querywithuid.js'),
     options:commOpts
   }], (err) => {
 

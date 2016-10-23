@@ -16,10 +16,11 @@ Ext.define('SC.App', {
       'Ext.chart.*',
       'Ext.data.JsonStore',
       'SC.view.LoginWindow',
-      'SC.view.ProductInfoWin',
+      'SC.view.AddProductInfoWin',
       'SC.component.MainProcessMessageHandler',
       'SC.component.AppEventHandler',
-      'SC.widgets.ProductMenuModule'
+      'SC.widgets.ProductMenuModule',
+      'SC.widgets.ProductShortcutModule'
       //'SC.widgets.SupplierModule'
     ],
 
@@ -33,6 +34,7 @@ Ext.define('SC.App', {
 
         me.callParent();
         var loginWin = new SC.view.LoginWindow();
+        loginWin.app = this;
         loginWin.show();
 
         // now ready...
@@ -40,8 +42,9 @@ Ext.define('SC.App', {
 
     getModules : function(){
         return [
-          new SC.view.ProductInfoWin(),
-          new SC.widgets.ProductMenuModule()
+          new SC.view.AddProductInfoWin(),
+          new SC.widgets.ProductMenuModule(),
+          new SC.widgets.ProductShortcutModule()
           //new SC.widgets.SupplierModule()
         ];
     },
@@ -59,7 +62,7 @@ Ext.define('SC.App', {
             shortcuts: Ext.create('Ext.data.Store', {
                 model: 'Ext.ux.desktop.ShortcutModel',
                 data: [
-                  {name:'商品档案',iconCls:'product-info-48x48',module:'win-product-info'}
+                  {name:'商品',iconCls:'product-info-48x48',module:'productinfo-shortcut-module'}
 
                 ]
             }),
@@ -87,7 +90,7 @@ Ext.define('SC.App', {
                     },
                     '-',
                     {
-                        text:'注册',
+                        text:'注销',
                         iconCls:'logout',
                         handler: me.onLogout,
                         scope: me
@@ -121,7 +124,12 @@ Ext.define('SC.App', {
     },
 
     onLogout: function () {
-        Ext.Msg.confirm('Logout', 'Are you sure you want to logout?');
+      var me = this;
+        Ext.Msg.confirm('注销', '确定注销登录?',function(btn){
+          if(btn == 'yes'){
+            me.messageHandler.send('asynchronous-message','user-logout');
+          }
+        });
     },
 
     onSettings: function () {

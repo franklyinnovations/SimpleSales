@@ -177,14 +177,37 @@ div.ux-taskbar div.x-toolbar {
 }
 
 .ux-desktop-shortcut-text {
-  font: normal 10px tahoma,arial,verdana,sans-serif;
+  font: bold 15px tahoma,arial,verdana,sans-serif;
   text-decoration: none;
   padding-top: 5px;
   color: white;
 }
 
+
 .x-view-over .ux-desktop-shortcut-text {
   text-decoration: underline;
+}
+
+.ux-desktop-shortcut-horizontal{
+  cursor: pointer;
+  text-align: center;
+  padding: 8px;
+  margin: 8px;
+  width: 96px;
+}
+
+.ux-desktop-shortcut-text-win {
+  font: bold 15px tahoma,arial,verdana,sans-serif;
+  text-decoration: none;
+  padding-top: 5px;
+  color: black;
+}
+
+.ux-desktop-shortcut-icon-win {
+  width: 96px;
+  height: 96px;
+  background-color: transparent;
+  background-repeat: no-repeat;
 }
 
 
@@ -305,6 +328,10 @@ div.ux-taskbar div.x-toolbar {
   background-image:url(icons/fam/user_suit.gif) !important;
 }
 
+.product-info-96x96 {
+  background-image: url(icons/product-info-96x96.png) !important;
+}
+
 .product-info-48x48 {
   background-image: url(icons/product-info-48x48.png) !important;
 }
@@ -319,4 +346,29 @@ div.ux-taskbar div.x-toolbar {
 
 .product-info-16x16 {
   background-image: url(icons/product-info-16x16.png) !important;
+}
+/*DataView选项*/
+.fileTpl
+{
+	float:left;
+	width: 74px;
+	height: 74px;
+//	overflow:hidden;
+}
+.fileTplDiv
+{
+	float:left;
+	margin:5px;
+	width:64px;
+	height:64px;
+//	overflow:hidden;
+}
+.fileDiv
+{
+	width:64px;
+	margin:10px;
+}
+.borderColor
+{
+	border: 3px solid #146ACB;
 }

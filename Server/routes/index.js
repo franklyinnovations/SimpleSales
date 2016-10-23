@@ -12,5 +12,6 @@ routes['SupplierAdd'] = require('./supplieradd.js');
 routes['SupplierRemove'] = require('./supplierremove.js');
 routes['SupplierUpdate'] = require('./supplierupdate.js');
 routes['SupplierPageQuery'] = require('./supplierpagequery.js');
+routes['SupplierQueryWithUID'] = require('./supplierquerywithuid.js');
 
 module.exports = routes;

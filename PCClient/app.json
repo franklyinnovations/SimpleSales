@@ -34,9 +34,12 @@
      */
     "requires": [
         "charts",
-        "ux"
+        "ux",
+        "ext-locale"
     ],
-
+    "locales": [
+        "zh_CN"
+    ],
     /**
      * Sass configuration properties.
      */

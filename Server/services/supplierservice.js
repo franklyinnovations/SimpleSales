@@ -94,6 +94,8 @@ var SupplierService = function(_dao){
 
   this.handleQueryAllWithUserId = function(request,callback){
     var args = request.url.query;
+    console.log('handleQueryAllWithUserId:');
+    console.log(args);
     dao.findAll(args,callback);
   };
 
@@ -105,6 +107,10 @@ var SupplierService = function(_dao){
     var selection = {
       userId:(args.userId == null)? 0 : Number(args.userId)
     };
+    if(args.name){
+      selection.name = args.name;
+    }
+
     var page = (args.page == null)? 1 : Number(args.page);
     var limit =  (args.limit == null)? 20 : Number(args.limit);;
     dao.findWithPage(selection,page,limit,function(result){

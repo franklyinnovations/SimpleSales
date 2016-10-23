@@ -58,6 +58,18 @@ Ext.define('SC.view.SupplierWin',{
         }
       }
     });
+    function handleQuery(){
+      var name = Ext.getCmp('supplier-query-name').getValue();
+      if(!name){
+        me.gridStore.load();
+      }else{
+        var _url = 'http://localhost:3000/supplierpagequery?userId='+me.uid + '&name='+name
+        me.gridStore.getProxy().url = _url;
+        me.gridStore.load(function(records, operation, success){
+          me.gridStore.getProxy().url = 'http://localhost:3000/supplierpagequery?userId='+ me.uid;
+        });
+      }
+    }
     var gridpanel = new Ext.grid.Panel({
       region: 'center',
       title:'供应商列表',
@@ -131,13 +143,21 @@ Ext.define('SC.view.SupplierWin',{
           xtype:'textfield',
           width:100,
           allowBlank:false,
-          id:'supplier-query-name'
+          id:'supplier-query-name',
+          enableKeyEvents: true,
+          listeners:{
+             keyup : function( thiz , e , eOpts ){
+               if(e.getKey() == Ext.event.Event.ENTER){
+                 handleQuery();
+               }
+             }
+          }
         },
         {
           xtype:'button',
           text:'查询',
           handler:function(){
-
+            handleQuery();
           }
         }
       ],
@@ -423,5 +443,6 @@ Ext.define('SC.view.SupplierWin',{
     Ext.getCmp('supplier-telephone').setValue('');
     Ext.getCmp('supplier-mobile').setValue('');
     Ext.getCmp('supplier-email').setValue('');
-  }
+  },
+
 });

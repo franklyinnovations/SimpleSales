@@ -10,7 +10,7 @@ Ext.define('SC.component.MainProcessMessageHandler',{
     me.ipcRenderer = require('electron').ipcRenderer;
 
     me.ipcRenderer.on('event-toolbar-toggled',function(event,msg){
-      if(msg == 'show-product-info-win'){
+      if(msg == 'show-add-product-info-win'){
         me.showProductInfoWin();
       }else if(msg == 'show-product-type-win'){
         me.showProductTypeWin();
@@ -32,7 +32,7 @@ Ext.define('SC.component.MainProcessMessageHandler',{
 
   showProductInfoWin:function(){
     var me = this;
-    var module = me.app.getModule('win-product-info');
+    var module = me.app.getModule('win-add-product-info');
     console.log('module == null?' + (module == null));
     var win = module && module.createWindow();
     if(win){

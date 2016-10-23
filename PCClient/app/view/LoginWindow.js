@@ -5,7 +5,8 @@ Ext.define('SC.view.LoginWindow',{
 		  'Ext.window.MessageBox',
 			'Ext.MessageBox',
 			'SC.component.LocalStorage',
-			'SC.component.LoginHandler'
+			'SC.component.LoginHandler',
+			'SC.component.MainProcessMessageHandler',
 	],
 	id : 'login-win',
 	layout : 'fit', //自适应布局
@@ -21,7 +22,7 @@ Ext.define('SC.view.LoginWindow',{
 	closable : false,//禁止关闭,
 	title:'登录系统',
 	modal:true,
-
+	messageHandler:null,
 	items:[
 		{
 			xtype:'form',
@@ -122,7 +123,7 @@ Ext.define('SC.view.LoginWindow',{
 					}
 			} ],
 			buttons : [ {
-				text : 'Login',
+				text : '确定',
 				//type : 'submit',
 				//id : 'sb',
 				//scope:this,
@@ -135,12 +136,14 @@ Ext.define('SC.view.LoginWindow',{
 
 				}
 			}, {
-				text : 'Reset',
+				text : '取消',
 				//scope:this,
 				handler:function(){
 					//console.log('reset');
+					//var win = Ext.getCmp('login-win');
+					//win.handleReset();
 					var win = Ext.getCmp('login-win');
-					win.handleReset();
+					win.app.messageHandler.send('asynchronous-message','user-quit');
 				}
 			} ]
 

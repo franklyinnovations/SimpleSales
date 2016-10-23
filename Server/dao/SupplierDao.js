@@ -247,6 +247,8 @@ var SupplierDao = function(db){
   };
 
   this.findAll = function(args,callback){
+    console.log('SupplierDao::findAll:');
+    console.log(args);
     var hasArgs = true;
     if(!args){
       hasArgs = false;
@@ -256,8 +258,16 @@ var SupplierDao = function(db){
       code:RES_SUCCESS,
       //datas:{}
     }
+    if(args.userId == null){
+      if(callback){
+        msg.total = 0;
+        msg.rows = [];
+        callback(msg);
+      }
+      return;
+    }
     if(hasArgs){
-      Supplier.findAll({where:args}).then(function(results){
+      Supplier.findAll({where:{userId:args.userId}}).then(function(results){
         if(results){
           msg.total = results.length;
           msg.rows = [];
@@ -285,6 +295,7 @@ var SupplierDao = function(db){
         }
       });
     }else{
+      console.log('SupplierDao::findAll:has no args');
       Supplier.findAll().then(function(results){
         if(results){
           msg.total = results.length;

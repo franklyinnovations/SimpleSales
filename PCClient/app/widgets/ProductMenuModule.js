@@ -8,7 +8,7 @@ Ext.define('SC.widgets.ProductMenuModule',{
   init:function(){
     this.launcher = {
       text:'商品',
-      iconCls:'product-info-32x32',
+      iconCls:'product-info-24x24',
       handler:function(){
         return false;
         },
@@ -18,13 +18,13 @@ Ext.define('SC.widgets.ProductMenuModule',{
       };
 
       this.launcher.menu.items.push({
-        text:'商品档案',
-        iconCls:'product-info-32x32',
+        text:'添加商品档案',
+        iconCls:'product-info-24x24',
         handler:function(){
           var desktop = this.app.getDesktop();
-          var win = desktop.getWindow('win-product-info');
+          var win = desktop.getWindow('win-add-product-info');
           if(!win){
-            var module = this.app.getModule('win-product-info');
+            var module = this.app.getModule('win-add-product-info');
             win = module && module.createWindow();
           }
           win.show();
@@ -35,7 +35,7 @@ Ext.define('SC.widgets.ProductMenuModule',{
       this.launcher.menu.items.push('-');
       this.launcher.menu.items.push({
         text:'商品分类',
-        iconCls:'product-info-32x32',
+        iconCls:'product-info-24x24',
         handler:function(){
 
           return SC.component.AppWindowManager.showWindow('win-product-type','SC.view.ProductTypeWin',
@@ -46,7 +46,7 @@ Ext.define('SC.widgets.ProductMenuModule',{
       this.launcher.menu.items.push('-');
       this.launcher.menu.items.push({
         text:'商品供应商',
-        iconCls:'product-info-32x32',
+        iconCls:'product-info-24x24',
         handler:function(){
           return SC.component.AppWindowManager.showWindow('module-supplier',
                 'SC.view.SupplierWin',

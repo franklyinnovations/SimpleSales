@@ -192,9 +192,14 @@ Ext.define('Ext.ux.desktop.Desktop', {
     },
 
     onShortcutItemClick: function (dataView, record) {
-        var me = this, module = me.app.getModule(record.data.module),
-            win = module && module.createWindow();
-
+        var me = this, module = me.app.getModule(record.data.module);
+            //win = module && module.createWindow();
+        var win = null;
+        if(module.handler){
+          module.handler();
+        }else{
+          win = module.createWindow();
+        }
         if (win) {
             me.restoreWindow(win);
         }
