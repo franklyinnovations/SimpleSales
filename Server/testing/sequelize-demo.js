@@ -1,8 +1,8 @@
 var dao = require('../dao');
 var models = require('../models');
 var sequelize = models.sequelize;
-sequelize.sync().then(function(){
-  var User = models.User;
+// sequelize.sync().then(function(){
+  //var User = models.User;
   // User.findOne({where:{id:1}}).then(function(user){
   //   if(user != null){
   //     console.log(user.get('name'));
@@ -95,17 +95,30 @@ sequelize.sync().then(function(){
   //   console.log(user);
   // });
 
-  User.findAll({offset:10,limit:10}).then(function(users){
-    if(users){
-      users.forEach(function(user){
-        var usr = {
-          id:user.get('id'),
-          name:user.get('name'),
-          code:user.get('code'),
-          password:user.get('password')
-        }
-        console.log(usr);
-      });
-    }
-  });
+  // User.findAll({offset:10,limit:10}).then(function(users){
+  //   if(users){
+  //     users.forEach(function(user){
+  //       var usr = {
+  //         id:user.get('id'),
+  //         name:user.get('name'),
+  //         code:user.get('code'),
+  //         password:user.get('password')
+  //       }
+  //       console.log(usr);
+  //     });
+  //   }
+  // });
+
+  //var ProductrInfo = models.ProductInfo;
+
+
+// });
+
+// sequelize.query('select info.*,supplier.name as supplierName,productType.name from ProductInfos as info,Suppliers as supplier where info.supplierId = supplier.id and info.userId = 1').then(function(results){
+//   console.log(results);
+// });
+var sql = "select t1.*,t2.name as Supplier,t3.name as productType from ProductInfos as t1,Suppliers as t2,ProductTypes as t3 where t1.supplierId = t2.id and t1.typeId = t3.id and t1.userId=1";
+sequelize.query('select t1.*,t2.name as Supplier,t3.name as productType from ProductInfos as t1,Suppliers as t2,ProductTypes as t3 where t1.supplierId = t2.id and t1.typeId = t3.id and t1.userId=1').then(function(results){
+  console.log('results:');
+  console.log(results);
 });

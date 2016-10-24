@@ -1,14 +1,14 @@
 'use strict';
 
-var SupplierPageQuery = function(service){
+var ProductInfoRemove = function(service){
   var _service = service;
 
   this.getRoute = function(){
     var route = {
-      path:'/supplierpagequery',
-      method:'GET',
+      path:'/productinforemove',
+      method:'POST',
       handler:function(request,reply){
-        _service.handleQueryWithPage(request,function(result){
+        service.handleRemove(request,function(result){
           reply(result);
         });
       }
@@ -17,4 +17,4 @@ var SupplierPageQuery = function(service){
   }
 };
 
-module.exports = SupplierPageQuery;
+module.exports = ProductInfoRemove;

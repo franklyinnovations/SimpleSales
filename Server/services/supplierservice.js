@@ -100,8 +100,8 @@ var SupplierService = function(_dao){
   };
 
   this.handleQueryWithPage = function(request,callback){
-    console.log(request.url);
-    console.log(request.url.path);
+    // console.log(request.url);
+    // console.log(request.url.path);
     var args = request.url.query;
     console.log(args)
     var selection = {
@@ -112,7 +112,7 @@ var SupplierService = function(_dao){
     }
 
     var page = (args.page == null)? 1 : Number(args.page);
-    var limit =  (args.limit == null)? 20 : Number(args.limit);;
+    var limit =  (args.limit == null)? 20 : Number(args.limit);
     dao.findWithPage(selection,page,limit,function(result){
       if(callback){
         callback(result);

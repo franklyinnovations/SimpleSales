@@ -1,9 +1,9 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var ProductInfo = sequelize.define('Supplier', {
+  var ProductInfo = sequelize.define('ProductInfo', {
     name: DataTypes.STRING(128),
     barcode:DataTypes.STRING,//条码
-    itemCode:DataTypes.STRING,//编码
+    itemcode:DataTypes.STRING,//编码
     supplyPrice:DataTypes.FLOAT,//进化货价
     sellPrice:DataTypes.STRING,//销售价格
     unitName:DataTypes.STRING,//单位

@@ -71,6 +71,21 @@ sequelize.sync({forece:true}).then(function(){
   },{
     register:require('./plugins/supplier/querywithuid/querywithuid.js'),
     options:commOpts
+  },{
+    register:require('./plugins/productinfo/add/productinfoadd.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/productinfo/get/productinfoget.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/productinfo/pagingquery/productinfopagingquery.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/productinfo/remove/productinforemove.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/productinfo/update/productinfoupdate.js'),
+    options:commOpts
   }], (err) => {
 
       if (err) {
