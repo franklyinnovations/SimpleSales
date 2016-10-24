@@ -1,10 +1,9 @@
 'use strict';
-//用户
+//仓库
 module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define('User', {
-    name: DataTypes.STRING,
-    code: DataTypes.STRING,
-    password: DataTypes.STRING
+  var Warehouse = sequelize.define('Warehouse', {
+    name: DataTypes.STRING(128),
+    userId:DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
@@ -12,5 +11,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  return User;
+  return Warehouse;
 };

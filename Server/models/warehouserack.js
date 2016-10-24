@@ -1,11 +1,12 @@
 'use strict';
-//商品分类
+//货架
 module.exports = function(sequelize, DataTypes) {
-  var ProductType = sequelize.define('ProductType', {
+  var WarehouseRack = sequelize.define('WarehouseRack', {
     name: DataTypes.STRING(128),
-    isLeaf: DataTypes.BOOLEAN,
-    userId: DataTypes.INTEGER,
-    parentId:DataTypes.INTEGER
+    position:DataTypes.STRING,
+    userId:DataTypes.INTEGER,
+    warehouseId:DataTypes.INTEGER,
+    
   }, {
     classMethods: {
       associate: function(models) {
@@ -13,5 +14,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  return ProductType;
+  return WarehouseRack;
 };

@@ -1,4 +1,5 @@
 'use strict';
+//商品档案
 module.exports = function(sequelize, DataTypes) {
   var ProductInfo = sequelize.define('ProductInfo', {
     name: DataTypes.STRING(128),

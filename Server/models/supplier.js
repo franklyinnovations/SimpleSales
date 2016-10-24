@@ -1,4 +1,5 @@
 'use strict';
+//供应商
 module.exports = function(sequelize, DataTypes) {
   var Supplier = sequelize.define('Supplier', {
     name: DataTypes.STRING(128),

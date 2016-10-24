@@ -22,4 +22,16 @@ routes['ProductInfoPagingQuery'] = require('./productinfopagingquery.js');
 routes['ProductInfoRemove'] = require('./productinforemove.js');
 routes['ProductInfoUpdate'] = require('./productinfoupdate.js');
 
+routes['WarehouseAdd'] = require('./warehouseadd.js');
+routes['WarehouseUpdate'] = require('./warehouseupdate.js');
+routes['WarehouseRemove'] = require('./warehouseremove.js');
+routes['WarehouseFindOne'] = require('./warehousefindone.js');
+routes['WarehouseFindAll'] = require('./warehousefindall.js');
+
+routes['WarehouseRackAdd'] = require('./warehouserackadd.js');
+routes['WarehouseRackUpdate'] = require('./warehouserackupdate.js');
+routes['WarehouseRackRemove'] = require('./warehouserackremove.js');
+routes['WarehouseRackFindOne'] = require('./warehouserackfindone.js');
+routes['WarehouseRackFindAll'] = require('./warehouserackfindall.js');
+
 module.exports = routes;

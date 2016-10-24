@@ -86,6 +86,36 @@ sequelize.sync({forece:true}).then(function(){
   },{
     register:require('./plugins/productinfo/update/productinfoupdate.js'),
     options:commOpts
+  },{
+    register:require('./plugins/warehouse/add/add.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/warehouse/update/update.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/warehouse/remove/remove.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/warehouse/findone/findone.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/warehouse/findall/findall.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/warehouserack/add/add.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/warehouserack/update/update.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/warehouserack/remove/remove.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/warehouserack/findone/findone.js'),
+    options:commOpts
+  },{
+    register:require('./plugins/warehouserack/findall/findall.js'),
+    options:commOpts
   }], (err) => {
 
       if (err) {
