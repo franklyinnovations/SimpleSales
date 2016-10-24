@@ -10,7 +10,9 @@ module.exports = function(sequelize, DataTypes) {
     unitName:DataTypes.STRING,//单位
     supplierId:DataTypes.INTEGER,//供应商
     userId:DataTypes.INTEGER,//用户
-    typeId:DataTypes.INTEGER,//商品分类
+    typeId:DataTypes.INTEGER,//商品分类,
+    warehouseId:DataTypes.INTEGER,//仓库
+    warehouseRackId:DataTypes.INTEGER,//货架
   }, {
     classMethods: {
       associate: function(models) {
