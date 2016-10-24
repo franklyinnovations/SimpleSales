@@ -38,19 +38,31 @@ var ProductInfoDao = function(db){
     });
   }
 
-  function getTotal(_userId,callback){
-    ProductInfo.findAll({
-      attributes:[[sequelize.fn('COUNT',sequelize.col('id')),'counts']]
-    }).then(function(results){
+  function getTotal(args,callback){
+    var sql = "select count(id) as ids from ProductInfos where userId = " + args.userId;
+    if(args.typeId != null){
+      sql = sql + ' and typeId = ' + args.typeId;
+    }
+    if(args.supplierId != null){
+      sql = sql + 'and supplierId = ' + args.supplierId;
+    }
+    if(args.barcode){
+      sql = sql + ' and barcode = "' + args.barcode + '"';
+    }
+    if(args.itemcode){
+      sql = sql + ' and itemcode = "' + args.itemcode + '"';
+    }
+    if(args.name){
+      sql = sql + ' and name = "' + args.name + '"';
+    }
+    sequelize.query(sql).spread(function(results,metas){
+      var total = 0;
+      console.log(results);
       if(results && results.length > 0){
-        var counts = results[0].get('counts');
-        if(callback){
-          callback(counts);
-        }
-      }else{
-        if(callback){
-          callback(0);
-        }
+        total = results[0].ids;
+      }
+      if(callback){
+        callback(total);
       }
     });
   }
@@ -361,25 +373,32 @@ var ProductInfoDao = function(db){
       }
       return;
     }
+    var queryArgs = {userId:args.userId};
     var sql = 'select t1.*,t2.name as supplierName,t3.name as typeName from ProductInfos as t1,Suppliers as t2,ProductTypes as t3 where t1.supplierId = t2.id and t1.typeId = t3.id and t1.userId = ' + args.userId;
     if(args.id != null){
       sql = sql + ' and t1.id = ' + args.id;
+      queryArgs.id = args.id;
     }
     if(args.name){
       sql = sql + ' and t1.name = "' + args.name + '"';
+      queryArgs.name = args.name;
     }
     if(args.barcode){
-      sql = sql + ' and t1.barcode = "' + args.barcode + '"';;
+      sql = sql + ' and t1.barcode = "' + args.barcode + '"';
+      queryArgs.barcode = args.barcode;
     }
     if(args.itemcode){
-      sql = sql + ' and t1.itemcode = "' + args.itemcode + '"';;
+      sql = sql + ' and t1.itemcode = "' + args.itemcode + '"';
+      queryArgs.itemcode = args.itemcode;
     }
 
     if(args.supplierId != null){
       sql = sql + ' and t1.supplierId = ' + args.supplierId;
+      queryArgs.supplierId = args.supplierId;
     }
     if(args.typeId){
       sql = sql + ' and t1.typeId = ' + args.typeId;
+      queryArgs.typeId = args.typeId;
     }
     if(args.page != null && args.limit != null){
       var _page = args.page <= 0 ? 0 : args.page - 1;
@@ -387,27 +406,37 @@ var ProductInfoDao = function(db){
       var _offset = _page * _pageSize;
       sql = sql + ' limit ' + _offset + ',' + _pageSize;
     }
+    var _total = 0;
+    function getCounts(done){
+      getTotal(queryArgs,function(result){
+        _total = result;
+        console.log('total = ' + _total);
+        done(null,'doQuery');
+      });
+    }
 
-    sequelize.query(sql,{type: sequelize.QueryTypes.RAW}).spread(function(result,metas){
-      var msg = {
-        result:'success',
-        code:RES_SUCCESS,
-        total:0,
-        rows:[]
-      };
-      //console.log(result)
-      if(result && result.length > 0){
-        msg.total = result.length;
-        result.forEach(function(row){
-          msg.rows.push(row);
-        });
+    function doQuery(done){
+      sequelize.query(sql,{type: sequelize.QueryTypes.RAW}).spread(function(result,metas){
+        var msg = {
+          result:'success',
+          code:RES_SUCCESS,
+          total:_total,
+          rows:[]
+        };
+        //console.log(result)
+        if(result && result.length > 0){
+          result.forEach(function(row){
+            msg.rows.push(row);
+          });
 
-      }
-      if(callback){
-        callback(msg);
-      }
-    });
-
+        }
+        if(callback){
+          callback(msg);
+        }
+        done(null,null);
+      });
+    }
+    async.series([getCounts,doQuery])
   };
 
   this.findAllWithPage = function(args,callback){

@@ -20,7 +20,8 @@ Ext.define('SC.App', {
       'SC.component.MainProcessMessageHandler',
       'SC.component.AppEventHandler',
       'SC.widgets.ProductMenuModule',
-      'SC.widgets.ProductShortcutModule'
+      'SC.widgets.ProductShortcutModule',
+      'SC.view.ProductInfoListWin'
       //'SC.widgets.SupplierModule'
     ],
 
@@ -44,7 +45,8 @@ Ext.define('SC.App', {
         return [
           new SC.view.AddProductInfoWin(),
           new SC.widgets.ProductMenuModule(),
-          new SC.widgets.ProductShortcutModule()
+          new SC.widgets.ProductShortcutModule(),
+          new SC.view.ProductInfoListWin()
           //new SC.widgets.SupplierModule()
         ];
     },

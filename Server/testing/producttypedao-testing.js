@@ -6,8 +6,8 @@ var randomstring = require('randomstring');
 var async = require('async');
 
 productTypeDao.save({
-  userId:121,
-  name:'C',
+  userId:1,
+  name:'D',
   isLeaf:true,
   parentId:-1
 },function(result){
@@ -20,8 +20,8 @@ productTypeDao.save({
 
 // productTypeDao.update({
 //   name:'A01',
-//   id:2,
-//   userId:121
+//   id:1,
+//   userId:1
 // },function(result){
 //   console.log(result)
 // });

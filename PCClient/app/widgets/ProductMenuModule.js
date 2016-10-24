@@ -6,6 +6,7 @@ Ext.define('SC.widgets.ProductMenuModule',{
     'SC.component.AppWindowManager'
   ],
   init:function(){
+    var me = this;
     this.launcher = {
       text:'商品',
       iconCls:'product-info-24x24',
@@ -16,7 +17,21 @@ Ext.define('SC.widgets.ProductMenuModule',{
             items: []
         }
       };
-
+    this.launcher.menu.items.push({
+        text:'商品档案列表',
+        iconCls:'product-info-24x24',
+        handler:function(){
+          var desktop = me.app.getDesktop();
+          var win = desktop.getWindow('win-product-info-list');
+          if(!win){
+            var module = me.app.getModule('win-product-info-list');
+            win = module && module.createWindow();
+          }
+          win.show();
+          return win;
+        }
+      });
+      this.launcher.menu.items.push('-');
       this.launcher.menu.items.push({
         text:'添加商品档案',
         iconCls:'product-info-24x24',
@@ -54,6 +69,7 @@ Ext.define('SC.widgets.ProductMenuModule',{
         },
         scope:this
       });
+
   }
 
 });

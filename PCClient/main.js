@@ -32,12 +32,19 @@ function createMenu(){
     label:'商品',
     submenu:[
       {
-        label:'商品档案',
+        label:'商品档案列表',
+        click:function(){
+          mainWindow.webContents.send('event-toolbar-toggled','show-add-product-info-list-win');
+        }
+      },
+      {type:'separator'},
+      {
+        label:'添加商品档案',
         click:function(){
           // ipcMain.on('asynchronous-message', function (event, arg) {
           //   event.sender.send('asynchronous-reply', 'show-product-info-win');
           // })
-          mainWindow.webContents.send('event-toolbar-toggled','show-product-info-win');
+          mainWindow.webContents.send('event-toolbar-toggled','show-add-product-info-win');
         }
       },
       {
@@ -70,6 +77,11 @@ function handleMessage(){
     //console.log(arg);
     if(arg == 'user-login'){
       createMenu();
+    }else if(arg == 'user-logout'){
+      app.relaunch();
+      app.quit();
+    }else if(arg == 'user-quit'){
+      app.quit();e
     }
   })
 }
@@ -92,6 +104,7 @@ function createWindow () {
     mainWindow = null
     //localStorage.clear();
   })
+  mainWindow.maximize();
   //createMenu();
   // var menu = Menu.buildFromTemplate([]);
   // Menu.setApplicationMenu(menu);

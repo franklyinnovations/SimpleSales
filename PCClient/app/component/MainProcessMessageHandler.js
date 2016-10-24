@@ -16,6 +16,8 @@ Ext.define('SC.component.MainProcessMessageHandler',{
         me.showProductTypeWin();
       }else if(msg == 'show-supplier-win'){
         me.showSupplierWin();
+      }else if(msg == 'show-add-product-info-list-win'){
+        me.showProductInfoListWin();
       }
     });
     me.ipcRenderer.on('event-app-exit',function(event,msg){
@@ -39,6 +41,17 @@ Ext.define('SC.component.MainProcessMessageHandler',{
       win.show();
     }
     console.log('MainProcessMessageHandler::showProductInfoWin');
+  },
+
+  showProductInfoListWin:function(){
+    var me = this;
+    var module = me.app.getModule('win-product-info-list');
+    console.log('module == null?' + (module == null));
+    var win = module && module.createWindow();
+    if(win){
+      win.show();
+    }
+    console.log('MainProcessMessageHandler::showProductInfoListWin');
   },
 
   showProductTypeWin:function(){

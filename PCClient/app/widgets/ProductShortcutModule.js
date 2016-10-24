@@ -78,6 +78,7 @@ Ext.define('SC.widgets.ProductShortcutModule',{
   shortcuts:Ext.create('Ext.data.Store', {
       model: 'SC.model.WindowShortcut',
       data: [
+        {name:'商品档案列表',iconCls:'resources/icons/product-info-96x96.png',module:'win-product-info-list',isWindow:false,windowId:null},
         {name:'添加商品档案',iconCls:'resources/icons/product-info-96x96.png',module:'win-add-product-info',isWindow:false,windowId:null},
         {name:'添加供应商',iconCls:'resources/icons/product-info-96x96.png',module:'SC.view.SupplierWin',isWindow:true,windowId:'module-supplier'},
         {name:'添加商品类型',iconCls:'resources/icons/product-info-96x96.png',module:'SC.view.ProductTypeWin',isWindow:true,windowId:'win-product-type'},

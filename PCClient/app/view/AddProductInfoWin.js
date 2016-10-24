@@ -8,6 +8,7 @@ Ext.define('SC.view.AddProductInfoWin',{
     'SC.view.SupplierWin',
     'SC.component.AppWindowManager',
     'SC.component.LocalStorage',
+    'SC.component.ProductInfoHandler'
   ],
   id:'win-add-product-info',
   selectedItem:null,
@@ -20,6 +21,7 @@ Ext.define('SC.view.AddProductInfoWin',{
     // }
     var me = this;
     me.uid = SC.component.LocalStorage.get('uid');
+    me.handler = new SC.component.ProductInfoHandler();
   },
   createWindow:function(){
     var desktop = this.app.getDesktop();
@@ -28,6 +30,7 @@ Ext.define('SC.view.AddProductInfoWin',{
     if(!win){
       var leftPanel = me.createTree();
       var centerPanel = me.createProductForm();
+      var southpanel = me.createStorePanel();
       win = desktop.createWindow({
         id:'win-add-product-info',
         title:'添加商品档案',
@@ -35,7 +38,7 @@ Ext.define('SC.view.AddProductInfoWin',{
         height:480,
         iconCls:'product-info-16x16',
         layout: 'border',
-        items:[leftPanel,centerPanel],
+        items:[leftPanel,centerPanel,southpanel],
         tbar:[
           {
             xtype:'button',
@@ -148,7 +151,7 @@ Ext.define('SC.view.AddProductInfoWin',{
     Ext.getCmp('productinfo-producttype-tf').setValue(record.data.text);
   },
   createProductForm:function(){
-
+    var me = this;
     var panel = Ext.create('Ext.form.Panel',{
       region:'center',
       title:'商品信息',
@@ -198,9 +201,12 @@ Ext.define('SC.view.AddProductInfoWin',{
             layout:'form',
             columnWidth:0.3,
             items:[{
-              xtype:'textfield',
+              xtype:'numberfield',
               id:'productinfo-supplyprice-tf',
               width:100,
+              minValue:0.0,
+              allowDecimals: true,
+              allowNegative: false,
               fieldLabel:'进货价',
               allowBlank:false
             }]
@@ -208,9 +214,12 @@ Ext.define('SC.view.AddProductInfoWin',{
             layout:'form',
             columnWidth:0.3,
             items:[{
-              xtype:'textfield',
+              xtype:'numberfield',
               id:'productinfo-sellprice-tf',
               width:100,
+              minValue:0.0,
+              allowDecimals: true,
+              allowNegative: false,
               fieldLabel:'零售价',
               allowBlank:false
             }]
@@ -267,10 +276,105 @@ Ext.define('SC.view.AddProductInfoWin',{
               emptyText: "--请选择供应商--"
           }]
         }]
-      }]//
+      }],//
+      buttons:[
+        {
+          text:'新增',
+          handler:function(){
+            if(me.selectedItem == null){
+              Ext.MessageBox.alert('添加商品档案','请选择商品分类');
+              return;
+            }
+            if(me.selectedItem.root){
+              Ext.MessageBox.alert('添加商品档案','请选择具体的商品分类');
+              return;
+            }
+            var _name = Ext.getCmp('productinfo-name-tf').getValue();
+            var _barcode = Ext.getCmp('productinfo-barcode-tf').getValue();
+            var _itemcode = Ext.getCmp('productinfo-itemcode-tf').getValue();
+            var _supplyPrice = Ext.getCmp('productinfo-supplyprice-tf').getValue();
+            var _sellPrice = Ext.getCmp('productinfo-sellprice-tf').getValue();
+            var _supplierId = Ext.getCmp('productinfo-supplier-vb').getValue();
+            var _typeId = me.selectedItem.id;
+            var _unitName = Ext.getCmp('productinfo-unit-name-tf').getValue();
+
+            if(_name == null || _name.trim().length == 0){
+              Ext.MessageBox.alert('添加商品档案','请输入名称');
+              return;
+            }
+
+            if(_barcode == null || _barcode.trim().length == 0){
+              Ext.MessageBox.alert('添加商品档案','请输入条码');
+              return;
+            }
+
+            if(_itemcode == null || _itemcode.trim().length == 0){
+              Ext.MessageBox.alert('添加商品档案','请输入商品编码');
+              return;
+            }
+
+            if(_supplyPrice == null){
+              Ext.MessageBox.alert('添加商品档案','请输入进货价');
+              return;
+            }
+            if(_supplyPrice <= 0.0){
+              Ext.MessageBox.alert('添加商品档案','无效进货价');
+              return;
+            }
+
+            if(_sellPrice == null){
+              Ext.MessageBox.alert('添加商品档案','请输入零售价');
+              return;
+            }
+            if(_sellPrice <= 0.0){
+              Ext.MessageBox.alert('添加商品档案','无效零售价');
+              return;
+            }
+            if(_supplierId == null){
+              Ext.MessageBox.alert('添加商品档案','请选择供应商');
+              return;
+            }
+            if(_unitName == null || _unitName.trim().length == 0){
+              Ext.MessageBox.alert('添加商品档案','请输入单位');
+              return;
+            }
+
+            var args = {
+              name:_name,
+              barcode:_barcode,
+              itemcode:_itemcode,
+              supplierId:_supplierId,
+              typeId:_typeId,
+              userId:me.uid,
+              supplyPrice:_supplyPrice,
+              sellPrice:_sellPrice,
+              unitName:_unitName
+            };
+
+            me.handler.add(args,function(result){
+              if(result.success){
+                Ext.getCmp('productinfo-barcode-tf').setValue('');
+                Ext.getCmp('productinfo-itemcode-tf').setValue('');
+                Ext.getCmp('productinfo-supplyprice-tf').setValue(0.0);
+                Ext.getCmp('productinfo-sellprice-tf').setValue(0.0);
+              }else{
+                Ext.MessageBox.alert('添加商品档案',result.message);
+              }
+            });
+
+          }
+        }
+      ]
+    });
+    return panel;
+  },
+  createStorePanel:function(){
+    var panel = Ext.create('Ext.panel.Panel',{
+      region:'south',
+      title:'仓库',
+      collapsible:true
     });
     return panel;
   }
 
-})
-;
+});
