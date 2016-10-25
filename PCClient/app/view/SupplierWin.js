@@ -63,10 +63,10 @@ Ext.define('SC.view.SupplierWin',{
       if(!name){
         me.gridStore.load();
       }else{
-        var _url = 'http://localhost:3000/supplierpagequery?userId='+me.uid + '&name='+name
+        var _url = 'http://localhost:3000/supplierpagequery?userId='+SC.component.LocalStorage.get('uid') + '&name='+name
         me.gridStore.getProxy().url = _url;
         me.gridStore.load(function(records, operation, success){
-          me.gridStore.getProxy().url = 'http://localhost:3000/supplierpagequery?userId='+ me.uid;
+          me.gridStore.getProxy().url = 'http://localhost:3000/supplierpagequery?userId='+ SC.component.LocalStorage.get('uid');
         });
       }
     }

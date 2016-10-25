@@ -7,7 +7,9 @@ module.exports = function(sequelize, DataTypes) {
     warehouseRackId:DataTypes.INTEGER,//货架
     productId:DataTypes.INTEGER,//商品
     productCounts:DataTypes.INTEGER,//商品数量
-    recordDate:DataTypes.DATE//录入时间
+    recordDate:DataTypes.DATE,//录入时间
+    recordId:DataTypes.STRING,//单据编号
+    recordType:DataTypes.INTEGER,//单据类型，进货，退货
   }, {
     classMethods: {
       associate: function(models) {

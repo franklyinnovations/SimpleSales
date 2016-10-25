@@ -345,7 +345,7 @@ Ext.define('SC.view.AddProductInfoWin',{
               itemcode:_itemcode,
               supplierId:_supplierId,
               typeId:_typeId,
-              userId:me.uid,
+              userId:SC.component.LocalStorage.get('uid'),
               supplyPrice:_supplyPrice,
               sellPrice:_sellPrice,
               unitName:_unitName

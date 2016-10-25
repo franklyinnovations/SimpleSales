@@ -12,9 +12,11 @@ Ext.define('SC.view.ProductInfoListWin',{
   id:'win-product-info-list',
   iconCls:'product-info-24x24',
   title:'商品列表',
+  uid:-1,
   init:function(){
     var me = this;
     me.uid = SC.component.LocalStorage.get('uid');
+    //console.log('uid = ' + uid);
   },
   createWindow:function(){
     var me = this;
@@ -47,7 +49,7 @@ Ext.define('SC.view.ProductInfoListWin',{
       pageSize:20,
       model:'SC.model.ProductInfoDisplay',
       proxy:{
-        url:'http://localhost:3000/productinfopagingquery?userId='+me.uid,
+        url:'http://localhost:3000/productinfopagingquery?userId='+SC.component.LocalStorage.get('uid'),
         type:'ajax',
         reader:{
           type: 'json',
@@ -61,10 +63,10 @@ Ext.define('SC.view.ProductInfoListWin',{
       if(!name){
         me.productInfoGridStore.load();
       }else{
-        var _url = 'http://localhost:3000/productinfopagingquery?userId='+me.uid + '&name='+name
+        var _url = 'http://localhost:3000/productinfopagingquery?userId='+SC.component.LocalStorage.get('uid') + '&name='+name
         me.productInfoGridStore.getProxy().url = _url;
         me.productInfoGridStore.load(function(records, operation, success){
-          me.productInfoGridStore.getProxy().url = 'http://localhost:3000/productinfopagingquery?userId='+ me.uid;
+          me.productInfoGridStore.getProxy().url = 'http://localhost:3000/productinfopagingquery?userId='+ SC.component.LocalStorage.get('uid');
         });
       }
     }
@@ -278,14 +280,14 @@ Ext.define('SC.view.ProductInfoListWin',{
     //var name = Ext.getCmp('productinfo-query-tf').getValue();
     var me = this;
     if(typeId == -1){
-      var _url = 'http://localhost:3000/productinfopagingquery?userId='+ me.uid;
+      var _url = 'http://localhost:3000/productinfopagingquery?userId='+ SC.component.LocalStorage.get('uid');
       me.productInfoGridStore.getProxy().url = _url
       me.productInfoGridStore.load();
     }else{
-      var _url = 'http://localhost:3000/productinfopagingquery?userId='+me.uid + '&typeId='+typeId
+      var _url = 'http://localhost:3000/productinfopagingquery?userId='+SC.component.LocalStorage.get('uid') + '&typeId='+typeId
       me.productInfoGridStore.getProxy().url = _url;
       me.productInfoGridStore.load(function(records, operation, success){
-        me.productInfoGridStore.getProxy().url = 'http://localhost:3000/productinfopagingquery?userId='+ me.uid;
+        me.productInfoGridStore.getProxy().url = 'http://localhost:3000/productinfopagingquery?userId='+ SC.component.LocalStorage.get('uid');
       });
     }
   }
