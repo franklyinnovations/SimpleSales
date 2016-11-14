@@ -1,4 +1,11 @@
 {
 	"name":"SalesClient",
-	"main":"main.js"
+	"main":"main.js",
+	"dependencies": {
+		"pinyin":"*",
+		"escpos":"*",
+		"leveldown":"*",
+		"levelup":"*",
+		"socket.io":"*"
+	}
 }
