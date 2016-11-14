@@ -56,10 +56,10 @@ userDao.save({
 // async.series([batchRemove]);
 
 
-userDao.findWithPage(1,10,function(results){
-  console.log(results);
-  results.datas.rows.forEach(function(result){
-    console.log(result);
+//userDao.findWithPage(1,10,function(results){
+// console.log(results);
+//  results.datas.rows.forEach(function(result){
+//    console.log(result);
     //users.push(result);
-  });
-});
+//  });
+//});
