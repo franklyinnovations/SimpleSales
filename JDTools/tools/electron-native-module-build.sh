@@ -1,0 +1,1 @@
+node-gyp configure --run-time=electron --target=1.3.4 --arch=x64 --dist-url=https://atom.io/download/atom-shell

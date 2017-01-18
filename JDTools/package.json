@@ -1,0 +1,13 @@
+{
+	"name":"JDTools",
+	"main":"main.js",
+	"dependencies": {
+		"pinyin":"*",
+		"escpos":"*",
+		"leveldown":"*",
+		"levelup":"*",
+		"crawler":"*",
+		"sqlite3":"*",
+		"socket.io":"*"
+	}
+}

@@ -10,9 +10,12 @@ module.exports = function(sequelize, DataTypes) {
     qq:DataTypes.STRING,
     webchat:DataTypes.STRING,
     bank:DataTypes.STRING,
-    userId:DataTypes.INTEGER
+    userId:DataTypes.INTEGER,
+    shopId:DataTypes.INTEGER
   }, {
     classMethods: {
+      timestamps: false,
+      tableName:'t_supplier',
       associate: function(models) {
         // associations can be defined here
       }

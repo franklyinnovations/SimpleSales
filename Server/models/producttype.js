@@ -5,9 +5,12 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING(128),
     isLeaf: DataTypes.BOOLEAN,
     userId: DataTypes.INTEGER,
+    shopId: DataTypes.INTEGER,
     parentId:DataTypes.INTEGER
   }, {
     classMethods: {
+      timestamps: false,
+      tableName:'t_product_type',
       associate: function(models) {
         // associations can be defined here
       }

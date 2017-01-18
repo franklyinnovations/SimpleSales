@@ -1,0 +1,5 @@
+build leveldown and sqlite3 for electron
+
+node-gyp configure  --target=1.4.14 --arch=x64 --dist-url=https://atom.io/download/atom-shell
+
+node-gyp build --target=1.4.14
