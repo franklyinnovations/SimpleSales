@@ -185,7 +185,7 @@ Ext.define('SC.view.GrabNewWin',{
               xtype:'panel',
               layout:'fit',
               region:'center',
-              id:'preview-panel',
+              id:'preview-panel-new',
               items:[
                 {
                  xtype: 'component',
@@ -336,7 +336,7 @@ Ext.define('SC.view.GrabNewWin',{
             {
               xtype:'textfield',
               width:400,
-              id:'pro-name'
+              id:'pro-name-new'
             },{
               xtype:'label',
               text:'分类',
@@ -367,6 +367,7 @@ Ext.define('SC.view.GrabNewWin',{
                 me.app.sqlite.put(key,gid,url,need_modify);
                 SC.component.LocalStorage.set('pro-gid-new','');
                 SC.component.LocalStorage.get('pro-url-new','');
+                Ext.getCmp('need_modify').setValue(false);
               }
             },{
               xtype:'button',
@@ -403,7 +404,7 @@ Ext.define('SC.view.GrabNewWin',{
                         items:[
                           {
                             xtype:'textareafield',
-                            id:'result-textarea',
+                            id:'result-textarea-new',
                             width:'100%',
                             height:'100%',
                             text:'',
@@ -411,17 +412,20 @@ Ext.define('SC.view.GrabNewWin',{
                         ],
                     }]
                 });
-                var textarea = Ext.getCmp('result-textarea');
+                var textarea = Ext.getCmp('result-textarea-new');
                 var resultsstr = '';
                 me.app.sqlite.all(key,need_modify,function(results){
 
                   if(results.length > 0){
+                    reswin.title = '添加结果【总共:'+results.length+'条】';
                     results.forEach(function(result){
                     //  console.log(result);
                       resultsstr += result.url + '\n';
                     });
                     textarea.setValue(resultsstr);
                     reswin.show()
+                  }else{
+                    Ext.MessageBox.alert('查看添加结果','无数据');
                   }
                 })
               }
@@ -537,15 +541,15 @@ Ext.define('SC.view.GrabNewWin',{
 
     if (record.data.url) {
         //me.selected = 'resources/images/wallpapers/' + record.data.img;
-        Ext.getCmp('preview-panel').items.items[0].el.dom.src=record.data.url;
+        Ext.getCmp('preview-panel-new').items.items[0].el.dom.src=record.data.url;
     }
   },
   onDataviewSelected:function( thiz , record , eOpts ){
     var me = this;
     me.selectedItem = record.data;
     if(record.data.url){
-      Ext.getCmp('preview-panel').items.items[0].el.dom.src=record.data.url;
-      Ext.getCmp('pro-name').setValue(record.data.url)
+      Ext.getCmp('preview-panel-new').items.items[0].el.dom.src=record.data.url;
+      Ext.getCmp('pro-name-new-new').setValue(record.data.url)
       console.log('gid = ' + record.data.gid);
       me.selectedItem = record.data;
       SC.component.LocalStorage.set('pro-url-new',record.data.url);

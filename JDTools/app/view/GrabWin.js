@@ -367,6 +367,7 @@ Ext.define('SC.view.GrabWin',{
                 me.app.sqlite.put(key,gid,url,need_modify);
                 SC.component.LocalStorage.set('pro-gid','');
                 SC.component.LocalStorage.get('pro-url','');
+                Ext.getCmp('need_modify').setValue(false);
               }
             },{
               xtype:'button',
@@ -416,12 +417,15 @@ Ext.define('SC.view.GrabWin',{
                 me.app.sqlite.all(key,need_modify,function(results){
 
                   if(results.length > 0){
+                    reswin.title = '添加结果【总共:'+results.length+'条】';
                     results.forEach(function(result){
                     //  console.log(result);
                       resultsstr += result.url + '\n';
                     });
                     textarea.setValue(resultsstr);
                     reswin.show()
+                  }else{
+                    Ext.MessageBox.alert('查看添加结果','无数据');
                   }
                 })
               }

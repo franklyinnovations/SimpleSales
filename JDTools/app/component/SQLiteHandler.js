@@ -28,9 +28,9 @@ Ext.define('SC.component.SQLiteHandler',{
     }
     var me = this;
     me._db.serialize(function(){
-      var sql = 'select * from t_pro_url where gid=? and need_modify=?';
+      var sql = 'select * from t_pro_url where gid=?';
       var insertsql = 'insert into t_pro_url(type_name,gid,url,need_modify)values(?,?,?,?)';
-      me._db.get(sql,[gid,need_modify],function(err,rows){
+      me._db.get(sql,[gid],function(err,rows){
         if(rows == null || rows.length == 0 ){
             me._db.run(insertsql,[key,gid,url,need_modify]);
         }else{

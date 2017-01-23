@@ -23,7 +23,8 @@ Ext.define('SC.App', {
       'SC.view.ProductPreviewWin',
       'SC.view.GrabNewWin',
       'SC.component.CrawlerHandler',
-      'SC.component.SQLiteHandler'
+      'SC.component.SQLiteHandler',
+      'SC.view.VVICWebPageBrowser'
       //'SC.component.AppEventHandler',
       //'SC.widgets.ProductMenuModule',
       //'SC.widgets.ProductShortcutModule',
@@ -57,7 +58,8 @@ Ext.define('SC.App', {
         return [
           new SC.view.GrabWin(),
           new SC.view.ProductPreviewWin(),
-          new SC.view.GrabNewWin()
+          new SC.view.GrabNewWin(),
+          new SC.view.VVICWebPageBrowser()
         //  new SC.view.AddProductInfoWin(),
         //  new SC.widgets.ProductMenuModule(),
         //  new SC.widgets.ProductShortcutModule(),
@@ -80,7 +82,8 @@ Ext.define('SC.App', {
                 model: 'Ext.ux.desktop.ShortcutModel',
                 data: [
                   {name:'抓取商品',iconCls:'product-info-48x48',module:'grab-win'},
-                  {name:'每日新款',iconCls:'product-info-48x48',module:'grab-new-win'}
+                  {name:'每日新款',iconCls:'product-info-48x48',module:'grab-new-win'},
+                  //{name:'搜款网',iconCls:'product-info-48x48',module:'vvic-browser-win'}
                 ]
             }),
 
