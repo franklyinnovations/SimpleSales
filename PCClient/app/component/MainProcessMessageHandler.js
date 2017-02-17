@@ -1,6 +1,6 @@
 Ext.define('SC.component.MainProcessMessageHandler',{
   requires:[
-    'SC.view.ProductTypeWin'
+  //  'SC.view.ProductTypeWin'
   ],
   ipcRenderer:null,
   app:null,
@@ -33,37 +33,37 @@ Ext.define('SC.component.MainProcessMessageHandler',{
   },
 
   showProductInfoWin:function(){
-    var me = this;
-    var module = me.app.getModule('win-add-product-info');
-    console.log('module == null?' + (module == null));
-    var win = module && module.createWindow();
-    if(win){
-      win.show();
-    }
-    console.log('MainProcessMessageHandler::showProductInfoWin');
+    // var me = this;
+    // var module = me.app.getModule('win-add-product-info');
+    // console.log('module == null?' + (module == null));
+    // var win = module && module.createWindow();
+    // if(win){
+    //   win.show();
+    // }
+    // console.log('MainProcessMessageHandler::showProductInfoWin');
   },
 
   showProductInfoListWin:function(){
-    var me = this;
-    var module = me.app.getModule('win-product-info-list');
-    console.log('module == null?' + (module == null));
-    var win = module && module.createWindow();
-    if(win){
-      win.show();
-    }
-    console.log('MainProcessMessageHandler::showProductInfoListWin');
+    // var me = this;
+    // var module = me.app.getModule('win-product-info-list');
+    // console.log('module == null?' + (module == null));
+    // var win = module && module.createWindow();
+    // if(win){
+    //   win.show();
+    // }
+    // console.log('MainProcessMessageHandler::showProductInfoListWin');
   },
 
   showProductTypeWin:function(){
 
-    SC.component.AppWindowManager.showWindow('win-product-type',
-          'SC.view.ProductTypeWin',
-          {desktop:this.app.getDesktop()});
+    // SC.component.AppWindowManager.showWindow('win-product-type',
+    //       'SC.view.ProductTypeWin',
+    //       {desktop:this.app.getDesktop()});
   },
   showSupplierWin:function(){
-    SC.component.AppWindowManager.showWindow('module-supplier',
-          'SC.view.SupplierWin',
-          {desktop:this.app.getDesktop()});
+    // SC.component.AppWindowManager.showWindow('module-supplier',
+    //       'SC.view.SupplierWin',
+    //       {desktop:this.app.getDesktop()});
   }
 
 

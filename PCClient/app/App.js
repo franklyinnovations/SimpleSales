@@ -15,13 +15,21 @@ Ext.define('SC.App', {
       'Ext.ux.desktop.Video',
       'Ext.chart.*',
       'Ext.data.JsonStore',
-      'SC.view.LoginWindow',
-      'SC.view.AddProductInfoWin',
+      'SC.component.LevelDB',
+      //'SC.view.LoginWindow',
+      //'SC.view.AddProductInfoWin',
       'SC.component.MainProcessMessageHandler',
-      'SC.component.AppEventHandler',
-      'SC.widgets.ProductMenuModule',
-      'SC.widgets.ProductShortcutModule',
-      'SC.view.ProductInfoListWin'
+      'SC.view.GrabWin',
+      'SC.view.ProductPreviewWin',
+      'SC.view.GrabNewWin',
+      'SC.component.CrawlerHandler',
+      'SC.component.SQLiteHandler',
+      'SC.view.VVICWebPageBrowser',
+      'SC.view.CustomAddWin'
+      //'SC.component.AppEventHandler',
+      //'SC.widgets.ProductMenuModule',
+      //'SC.widgets.ProductShortcutModule',
+      //'SC.view.ProductInfoListWin'
       //'SC.widgets.SupplierModule'
     ],
 
@@ -30,23 +38,34 @@ Ext.define('SC.App', {
     init: function() {
         // custom logic before getXYZ methods get called...
         var me = this;
-
+        me.leveldb = new SC.component.LevelDB();
+        me.leveldb.initdb();
+        me.crawler = new SC.component.CrawlerHandler();
+        me.sqlite = new SC.component.SQLiteHandler();
+        me.sqlite.open();
+        me.sqlite.init();
         me.messageHandler = new SC.component.MainProcessMessageHandler({app:me});
-
+        var ipcRenderer = require('electron').ipcRenderer;
+        ipcRenderer.send('asynchronous-message', 'user-login');
         me.callParent();
-        var loginWin = new SC.view.LoginWindow();
-        loginWin.app = this;
-        loginWin.show();
+        //var loginWin = new SC.view.LoginWindow();
+        //loginWin.app = this;
+        //loginWin.show();
 
         // now ready...
     },
 
     getModules : function(){
         return [
-          new SC.view.AddProductInfoWin(),
-          new SC.widgets.ProductMenuModule(),
-          new SC.widgets.ProductShortcutModule(),
-          new SC.view.ProductInfoListWin()
+          new SC.view.GrabWin(),
+          new SC.view.ProductPreviewWin(),
+          new SC.view.GrabNewWin(),
+          new SC.view.VVICWebPageBrowser(),
+          new SC.view.CustomAddWin()
+        //  new SC.view.AddProductInfoWin(),
+        //  new SC.widgets.ProductMenuModule(),
+        //  new SC.widgets.ProductShortcutModule(),
+        //  new SC.view.ProductInfoListWin()
           //new SC.widgets.SupplierModule()
         ];
     },
@@ -64,8 +83,10 @@ Ext.define('SC.App', {
             shortcuts: Ext.create('Ext.data.Store', {
                 model: 'Ext.ux.desktop.ShortcutModel',
                 data: [
-                  {name:'商品',iconCls:'product-info-48x48',module:'productinfo-shortcut-module'}
-
+                  {name:'抓取商品',iconCls:'product-info-48x48',module:'grab-win'},
+                  {name:'每日新款',iconCls:'product-info-48x48',module:'grab-new-win'},
+                  {name:'手动添加',iconCls:'product-info-48x48',module:'grab-custom-win'},
+                  //{name:'搜款网',iconCls:'product-info-48x48',module:'vvic-browser-win'}
                 ]
             }),
 
@@ -75,7 +96,6 @@ Ext.define('SC.App', {
     },
 
     getStartConfig : function() {
-      console.log('getStartConfig');
         var me = this, ret = me.callParent();
         me.startConfigObj = {
             title: me.menuTitle,
@@ -102,12 +122,13 @@ Ext.define('SC.App', {
             listeners:{
               show:function(menu,options){
                 //console.log('menu show')
-                var name = SC.component.LocalStorage.get('usrname');
-                me.menuTitle = name;
-                menu.setTitle(name);
+                //var name = SC.component.LocalStorage.get('usrname');
+                //me.menuTitle = name;
+                //menu.setTitle(name);
               }
             }
         };
+        console.log('init start menu');
         return Ext.apply(ret,me.startConfigObj);
     },
 

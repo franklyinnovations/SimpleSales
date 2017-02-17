@@ -347,6 +347,33 @@ div.ux-taskbar div.x-toolbar {
 .product-info-16x16 {
   background-image: url(icons/product-info-16x16.png) !important;
 }
+
+/* Icons */
+		.ux-notification-icon-information {
+			background-image: url('images/icon16_info.png');
+		}
+
+		.ux-notification-icon-error {
+			background-image: url('images/icon16_error.png');
+		}
+
+
+		/* Using standard theme */
+		.ux-notification-window .x-window-body {
+			text-align: center;
+			padding: 15px 5px 15px 5px;
+		}
+
+		/* Custom styling */
+		.ux-notification-light .x-window-header {
+			background-color: transparent;
+		}
+    .ux-notification-light .x-window-body {
+			text-align: center;
+			padding: 15px 5px 20px 5px;
+			background-color: transparent;
+			border: 0px solid white;
+		}
 /*DataView选项*/
 .fileTpl
 {
